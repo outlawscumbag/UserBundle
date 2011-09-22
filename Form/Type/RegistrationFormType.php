@@ -33,8 +33,8 @@ class RegistrationFormType extends AbstractType
             ->add('first_name')
             ->add('last_name')
             ->add('email', 'email')
-            ->add('plainPassword', 'repeated', array('type' => 'password'))
-            ->add('userRoles', 'entity', array( 'label' => 'Role', 'multiple' => true, 'expanded' => true,  'property' => 'Name', 'class' => 'Nooga\MainBundle\Entity\Role'));
+            ->add('plainPassword', 'repeated', array('type' => 'password', 'first_name' => 'Password', 'second_name' => 'Confirm'))
+            ->add('userRoles', 'entity', array( 'label' => 'Role', 'multiple' => true, 'expanded' => false,  'property' => 'altName', 'class' => 'Nooga\MainBundle\Entity\Role')); 
     }
 
     public function getDefaultOptions(array $options)

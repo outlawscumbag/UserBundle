@@ -31,7 +31,7 @@ class RegistrationController extends ContainerAware
         $form = $this->container->get('fos_user.registration.form');
         $formHandler = $this->container->get('fos_user.registration.form.handler');
         $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
-
+        $current_user = $this->container->get('security.context')->getToken()->getUser();
         $process = $formHandler->process($confirmationEnabled);
         if ($process) {
             $user = $form->getData();
@@ -50,7 +50,8 @@ class RegistrationController extends ContainerAware
             return new RedirectResponse($url);
         }
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:register.html.'.$this->getEngine(), array(
+        return $this->container->get('templating')->renderResponse('NoogaMainBundle:Profile:register.html.'.$this->getEngine(), array(
+            'user' => $current_user,
             'form' => $form->createView(),
             'theme' => $this->container->getParameter('fos_user.template.theme'),
         ));

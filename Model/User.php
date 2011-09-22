@@ -202,7 +202,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * Serializes the user.
      *
-     * The serialized data have to contain the fields used by the equals method and the username.
+     * The serialized data has to contain the fields used by the equals method and the username.
      *
      * @return string
      */
