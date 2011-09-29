@@ -59,5 +59,6 @@ class ProfileFormType extends AbstractType
             ->add('username')
             ->add('email', 'email')
         ;
+
     }
 }
