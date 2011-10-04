@@ -1,0 +1,1 @@
+[01-Oct-2011 10:26:21] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/sqlite.so' - /usr/lib64/php/modules/sqlite.so: cannot open shared object file: No such file or directory in Unknown on line 0

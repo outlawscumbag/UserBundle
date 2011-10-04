@@ -1,7 +1,5 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "NoogaMainBundle:Profile:edit.html.twig" %}
 
 {% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%email%': user.email}, 'FOSUserBundle') }}
-</p>
+<div id="id-message">{{ 'resetting.check_email'|trans({'%email%': user.email}, 'FOSUserBundle') }}</div>
 {% endblock %}

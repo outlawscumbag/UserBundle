@@ -35,26 +35,25 @@ class RegistrationFormType extends AbstractType
             ->add('first_name')
             ->add('last_name')
             ->add('email', 'email')
-            ->add('plainPassword', 'password', array( 'label' => 'Password' ))
+            ->add('plainPassword', 'password', array( 
+                'label' => 'Password', ))
             ->add('plainPasswordConfirm', 'password', array(
                 'label' => 'Confirm',
                 'property_path' => false, ))
             
-            //'repeated', array('type' => 'password', 'first_name' => 'Password', 'second_name' => 'Confirm'))
             ->add('userRoles', 'entity', array( 
                 'label' => 'Role', 
                 'multiple' => true, 
                 'expanded' => false,  
                 'property' => 'altName', 
-                'class' => 'Nooga\MainBundle\Entity\Role')); 
+                'class' => 'Nooga\MainBundle\Entity\Role', )); 
 
-         $builder->addValidator(new CallbackValidator(function($form)
-         {
-            if($form['plainPasswordConfirm']->getData() != $form['plainPassword']->getData())
-         {
-            $form['plainPasswordConfirm']->addError(new FormError('Passwords must match.'));
-         }
-      }));
+        $builder->addValidator(new CallbackValidator(function($form)
+        {
+            if($form['plainPasswordConfirm']->getData() != $form['plainPassword']->getData()) {
+                $form['plainPasswordConfirm']->addError(new FormError('Passwords must match.'));
+            }
+        }));
         
     }
 

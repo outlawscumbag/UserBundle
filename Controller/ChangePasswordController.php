@@ -36,8 +36,9 @@ class ChangePasswordController extends ContainerAware
 
         $form = $this->container->get('fos_user.change_password.form');
         $formHandler = $this->container->get('fos_user.change_password.form.handler');
-
+        
         $process = $formHandler->process($user);
+
         if ($process) {
             $this->setFlash('fos_user_success', 'change_password.flash.success');
 
@@ -46,7 +47,7 @@ class ChangePasswordController extends ContainerAware
 
         return $this->container->get('templating')->renderResponse(
             'FOSUserBundle:ChangePassword:changePassword.html.'.$this->container->getParameter('fos_user.template.engine'),
-            array('form' => $form->createView(), 'theme' => $this->container->getParameter('fos_user.template.theme'))
+            array('user' => $user, 'form' => $form->createView(), 'theme' => $this->container->getParameter('fos_user.template.theme'))
         );
     }
 
@@ -58,7 +59,7 @@ class ChangePasswordController extends ContainerAware
      */
     protected function getRedirectionUrl(UserInterface $user)
     {
-        return $this->container->get('router')->generate('fos_user_profile_show');
+        return $this->container->get('router')->generate('profile_view', array('username' => $user->getUsername()));
     }
 
     protected function setFlash($action, $value)
