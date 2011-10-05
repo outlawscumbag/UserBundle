@@ -35,6 +35,16 @@ abstract class User implements UserInterface, GroupableInterface
     protected $username;
 
     /**
+     * @var string 
+     */
+    protected $firstName;
+
+    /**
+     * @var string
+     */
+    protected $lastName;
+
+    /**
      * @var string
      */
     protected $usernameCanonical;
@@ -173,7 +183,7 @@ abstract class User implements UserInterface, GroupableInterface
         if (!$user instanceof User) {
             return false;
         }
-
+        
         if ($this->password !== $user->getPassword()) {
             return false;
         }
@@ -266,6 +276,39 @@ abstract class User implements UserInterface, GroupableInterface
     {
         return $this->username;
     }
+
+    /**
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string
+     */
+    public function setLastName($value)
+    {
+        $this->lastName = $value;
+    }
+
+    /**
+     * @param string
+     */
+    public function setFirstName($value)
+    {
+        $this->firstName = $value;
+    }
+
 
     /**
      * Gets the canonical username in search and sort queries.
@@ -498,7 +541,7 @@ abstract class User implements UserInterface, GroupableInterface
     }
 
     /**
-     * Removes a role to the user.
+     * Removes a role from the user.
      *
      * @param string $role
      */

@@ -13,12 +13,23 @@ namespace FOS\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\CallbackValidator;
 
 class ResettingFormType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('new', 'repeated', array('type' => 'password'));
+        $builder->add('new', 'password', array('label' => 'Password'))
+                ->add('confirm', 'password', array('label' => 'Confirm', 'property_path' => false));
+
+        $builder->addValidator(new CallbackValidator(function($form)
+        {
+            if($form['new']->getData() != $form['confirm']->getData()) {
+                $form['confirm']->addError(new FormError('Passwords must match.'));
+            }
+        }));
+    
     }
 
     public function getDefaultOptions(array $options)

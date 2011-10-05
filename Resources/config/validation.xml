@@ -28,7 +28,7 @@
             <constraint name="NotBlank">
                 <option name="message">Please enter a username</option>
                 <option name="groups">
-                    <value>Registration</value>
+                   <value>Registration</value>
                     <value>Profile</value>
                 </option>
             </constraint>
@@ -49,6 +49,27 @@
                 </option>
             </constraint>
         </property>
+
+        <property name="firstName">
+            <constraint name="NotBlank">
+                <option name="message">Please enter a first name</option>
+                <option name="groups">
+                   <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="lastName">
+            <constraint name="NotBlank">
+                <option name="message">Please enter a last name</option>
+                <option name="groups">
+                   <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+        </property>
+
 
         <property name="email">
             <constraint name="NotBlank">
