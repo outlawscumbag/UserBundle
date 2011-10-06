@@ -1,10 +1,10 @@
-<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+<form action="{{ path('fos_user_resetting_send_email') }}" id="reset" method="POST" class="fos_user_resetting_request">
     <div>
         <table id="id-form" style="width: 535px;">
             <tbody>
                 <tr>
                     <th valign="top" style="width:201px;">
-                        <label style="font-size:15px" for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
+                        <label style="font-size:15px" for="username">Username or email address</label>
                     </th>
                 </tr>
                 <tr>
@@ -12,12 +12,9 @@
                         <input type="text" class="inp-field" id="username" name="username" />
                     </td>
                     <td id="errors" style="width:450px; height: 45px;">
-                    {% if invalid_username is defined %}
                         <div class="error-left"></div>
                         <div class="error-inner">
-                            {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}
                         </div>
-                    {% endif %}
                     </td>
                 </tr>
             </tbody>
@@ -27,3 +24,20 @@
         <input type="submit" class="form-submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
     </div>
 </form>
+<script>
+$('div.error-left').hide();
+$('.error-inner').hide();
+$('#reset').submit(function(e) {
+    e.preventDefault();
+    var $form = $(this),
+    username = $form.find('input[name="username"]').val();
+    url = $form.attr('action');
+    $.post(url, { username: username },
+        function(data) {
+            $('.error-left').show();
+            $('.error-inner').show();
+            $('.error-inner').text(data);
+        }
+    );
+});
+</script>

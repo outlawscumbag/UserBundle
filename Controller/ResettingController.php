@@ -15,6 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use FOS\UserBundle\Model\UserInterface;
 
 /**
@@ -45,17 +47,12 @@ class ResettingController extends ContainerAware
 
         $current_user = $this->container->get('security.context')->getToken()->getUser();
         
-        $login = preg_match('/login/', $_SERVER['HTTP_REFERER']);
-    
         if (null === $user) {
-            return $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:request.html.'.$this->getEngine(), array(
-                'user' => $current_user,
-                'invalid_username' => $username,
-            ));
+            return new Response("Invalid username or email address");
         }
-
+       
         if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-            return $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:passwordAlreadyRequested.html.'.$this->getEngine(), array('user' => $current_user));
+            return new Response("This password has been reset within the last 24 hours.");
         }
 
         $user->generateConfirmationToken();
@@ -64,8 +61,12 @@ class ResettingController extends ContainerAware
         $user->setPasswordRequestedAt(new \DateTime());
         $this->container->get('fos_user.user_manager')->updateUser($user);
 
-        return new RedirectResponse($this->container->get('router')->generate('fos_user_resetting_check_email'));
+        return new Response('A recovery email has been sent to '.$user->getEmail().'.');
     }
+
+    /**
+     * Request reset user password: submit form and send email
+     */
 
     /**
      * Tell the user to check his email provider

@@ -17,4 +17,5 @@ class ChangePassword extends CheckPassword
      * @var string
      */
     public $new;
+
 }

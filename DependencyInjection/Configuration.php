@@ -46,7 +46,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('from_email')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('address')->defaultValue('webmaster@example.com')->cannotBeEmpty()->end()
+                        ->scalarNode('address')->defaultValue('noreply@nooga.com')->cannotBeEmpty()->end()
                         ->scalarNode('sender_name')->defaultValue('webmaster')->cannotBeEmpty()->end()
                     ->end()
                 ->end()
