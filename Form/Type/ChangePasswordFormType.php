@@ -20,7 +20,7 @@ class ChangePasswordFormType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('current', 'password', array('label' => 'Current', 'error_bubbling' => true))
+        $builder->add('current', 'password', array('label' => 'Current', 'error_bubbling' => false))
                 ->add('new', 'password', array('label' => 'New'))
                 ->add('confirm', 'password', array('label' => 'Confirm', 'property_path' => false));
 
