@@ -31,22 +31,20 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('username')
-            ->add('firstName')
-            ->add('lastName')
+            ->add('firstName', 'text', array('label' => 'First Name'))
+            ->add('lastName',  'text', array('label' => 'Last Name'))
+            ->add('address',  'text')
             ->add('email', 'email')
-            ->add('plainPassword', 'password', array( 
-                'label' => 'Password', ))
+            ->add('plainPassword', 'password', array(
+                'label' => 'Password',
+                'error_bubbling' => false, ))
             ->add('plainPasswordConfirm', 'password', array(
-                'label' => 'Confirm',
-                'property_path' => false, ))
-            
-            ->add('userRoles', 'entity', array( 
-                'label' => 'Role', 
-                'multiple' => true, 
-                'expanded' => false,  
-                'property' => 'altName', 
-                'class' => 'Nooga\MainBundle\Entity\Role', )); 
+                'label' => 'Confirm Password',
+                'invalid_message' => 'The password fields must match.',
+                'property_path' => false, 'error_bubbling' => false, ))
+            ->add('username',  'text', array('label' => 'Display Name'))
+            ->add('image', 'file', array('label' => 'Picture (optional)', 'property_path' => false))
+            ->add('terms', 'checkbox', array('label' => 'Terms & Conditions', 'property_path' => 'termsAccepted'));
 
         $builder->addValidator(new CallbackValidator(function($form)
         {

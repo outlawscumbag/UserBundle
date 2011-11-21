@@ -47,6 +47,11 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * @var string
      */
+    protected $termsAccepted;
+
+    /**
+     * @var string
+     */
     protected $usernameCanonical;
 
     /**
