@@ -106,7 +106,7 @@ class RegistrationController extends ContainerAware
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:confirmed.html.'.$this->getEngine(), array(
+        return $this->container->get('templating')->renderResponse('NoogaMainBundle:Security:confirmed.html.'.$this->getEngine(), array(
             'user' => $user,
         ));
     }
