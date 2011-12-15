@@ -33,18 +33,22 @@ class SecurityController extends ContainerAware
         } else {
             $error = '';
         }
+        
+        $response = array();
 
         if ($error) {
             // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
-            $error = $error->getMessage();
+            $response['header'] = 'Error';
+            $response['data'] = $error->getMessage();
+            return $this->container->get('templating')->renderResponse('NoogaMainBundle:Security:response.html.twig', array('response' => $response));
         }
+
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContext::LAST_USERNAME);
 
         return $this->container->get('templating')->renderResponse('NoogaMainBundle:Security:login.html.twig', 
         array(
             'last_username' => $lastUsername,
-            'error'         => $error,
         ));
     }
 
