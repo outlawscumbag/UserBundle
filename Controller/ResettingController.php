@@ -121,7 +121,7 @@ class ResettingController extends ContainerAware
             return new RedirectResponse($this->getRedirectionUrl($user));
         }
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:reset.html.'.$this->getEngine(), array(
+        return $this->container->get('templating')->renderResponse('NoogaMainBundle:Security:reset.html.'.$this->getEngine(), array(
             'user' => $user,
             'token' => $token,
             'form' => $form->createView(),
@@ -150,7 +150,8 @@ class ResettingController extends ContainerAware
      */
     protected function getRedirectionUrl(UserInterface $user)
     {
-        return $this->container->get('router')->generate('fos_user_profile_show');
+        //return $this->container->get('router')->generate('fos_user_profile_show');
+        return $this->container->get('router')->generate('home');
     }
 
     protected function setFlash($action, $value)
