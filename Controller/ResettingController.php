@@ -47,12 +47,18 @@ class ResettingController extends ContainerAware
 
         $current_user = $this->container->get('security.context')->getToken()->getUser();
         
+        $response = array();
+
         if (null === $user) {
-            return new Response("Invalid username or email address");
+            $response['header'] = 'Error';
+            $response['data'] = 'Invalid username or email address';
+            return $this->container->get('templating')->renderResponse('NoogaMainBundle:Security:response.html.'.$this->getEngine(), array('response' => $response));
         }
        
         if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-            return new Response("This password has been reset within the last 24 hours.");
+            $response['header'] = 'Error';
+            $response['data'] = 'This password has been reset within the last 24 hours.';
+            return $this->container->get('templating')->renderResponse('NoogaMainBundle:Security:response.html.'.$this->getEngine(), array('response' => $response));
         }
 
         $user->generateConfirmationToken();
@@ -60,8 +66,10 @@ class ResettingController extends ContainerAware
         $this->container->get('fos_user.mailer')->sendResettingEmailMessage($user);
         $user->setPasswordRequestedAt(new \DateTime());
         $this->container->get('fos_user.user_manager')->updateUser($user);
-
-        return new Response('A recovery email has been sent to '.$user->getEmail().'.');
+        
+        $response['header'] = 'Password Request';
+        $response['data'] = 'A recovery email has been sent to '.$user->getEmail().'.';
+        return $this->container->get('templating')->renderResponse('NoogaMainBundle:Security:response.html.'.$this->getEngine(), array('response' => $response));
     }
 
     /**
@@ -113,7 +121,7 @@ class ResettingController extends ContainerAware
             return new RedirectResponse($this->getRedirectionUrl($user));
         }
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:reset.html.'.$this->getEngine(), array(
+        return $this->container->get('templating')->renderResponse('NoogaMainBundle:Security:reset.html.'.$this->getEngine(), array(
             'user' => $user,
             'token' => $token,
             'form' => $form->createView(),
@@ -142,7 +150,8 @@ class ResettingController extends ContainerAware
      */
     protected function getRedirectionUrl(UserInterface $user)
     {
-        return $this->container->get('router')->generate('fos_user_profile_show');
+        //return $this->container->get('router')->generate('fos_user_profile_show');
+        return $this->container->get('router')->generate('home');
     }
 
     protected function setFlash($action, $value)
